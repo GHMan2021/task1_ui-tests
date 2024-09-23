@@ -27,7 +27,7 @@ from pages.manager_page import ManagerPage
     [(Customer.first_name, Customer.last_name, Customer.post_code)]
 )
 def test_create_customer(driver: WebDriver, first_name: str, last_name: str, post_code: str) -> None:
-    with allure.step("Открытие страницу 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager'"):
+    with allure.step("Открытие страницы 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager'"):
         add_customer_page = AddCustomerPage(driver)
         add_customer_page.open()
 
@@ -44,7 +44,7 @@ def test_create_customer(driver: WebDriver, first_name: str, last_name: str, pos
         assert add_customer_page.get_alert_message() == ("Customer added successfully "
                                                          "with customer id :"), "Клиент не создан"
 
-    with allure.step("Принятие сообщение"):
+    with allure.step("Принятие сообщения"):
         add_customer_page.click_alert()
 
     with allure.step("Проверка, что клиент добавлен"):

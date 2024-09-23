@@ -1,3 +1,5 @@
+import allure
+
 from pages.base_page import BasePage
 
 
@@ -10,6 +12,7 @@ class ManagerPage(BasePage):
 
     BTN_MENU_LIST = ("xpath", "(//div[@class='center']//button)")
 
+    @allure.step("Нажать пункт меню - {item_title}")
     def click_on_item_menu(self, item_title: str) -> None:
         """Нажимает на элемент меню с указанным заголовком.
 
@@ -21,3 +24,5 @@ class ManagerPage(BasePage):
             if i.text == item_title:
                 i.click()
                 break
+        else:
+            raise ValueError(f'Элемент меню с заголовком "{item_title}" не найден на странице.')

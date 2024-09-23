@@ -1,5 +1,6 @@
 from typing import Tuple, List
 
+import allure
 from selenium.webdriver.remote.webelement import WebElement
 
 from pages.base_page import BasePage
@@ -24,12 +25,14 @@ class ListCustomersPage(BasePage):
     POST_CODE_LIST = ("xpath", "(//tr[@class='ng-scope']//td[3])")
     DELETE_BTN_LIST = ("xpath", "(//button[@ng-click='deleteCust(cust)'])")
 
+    @allure.step("Сортировка записей по имени клиентов")
     def sort_by_first_name(self) -> None:
         """Сортирует записи по имени."""
         column = self.element_to_be_clickable(self.FIRST_NAME_TITLE)
         column.click()
         column.click()
 
+    @allure.step("Удаление клиента")
     def delete_customers(self) -> None:
         """Удаляет выбранных клиентов."""
         delete_records_element_list = self.get_delete_records_element_list()
@@ -37,6 +40,10 @@ class ListCustomersPage(BasePage):
             elem[3].click()
 
     def get_all_records_elements_list(self) -> List[Tuple[WebElement, ...]]:
+        #  Пример: [(<selenium.webdriver.remote.webelement.WebElement (session="b5b9b089042703374ad12602462cc7c6",
+        #  element="f.EB5AA2D69E4B2678711932CEAC78FBE5.d.D0C01B3858338625AD3CD9F04E4D543A.e.26")>,
+        #  <selenium.webdriver.remote.webelement.WebElement (session="b5b9b089042703374ad12602462cc7c6",
+        #  element="f.EB5AA2D69E4B2678711932CEAC78FBE5.d.D0C01B3858338625AD3CD9F04E4D543A.e.27")>...
         """Получает список всех элементов записей.
 
         Returns:
@@ -81,13 +88,18 @@ class ListCustomersPage(BasePage):
         return delete_records_element_list
 
     def get_all_data_customers(self) -> List[Tuple[str, ...]]:
-        """"""
+        """Получает все данные каждого клиента.
+
+        Returns:
+            List[Tuple[str, ...]]: Список из кортежей данных каждого клиента.
+        """
         all_records_element_list = self.get_all_records_elements_list()
         if not all_records_element_list:
             return []
 
         all_data_element_list = [i[:-1] for i in all_records_element_list]
         all_data_customers = [tuple(i.text for i in elem) for elem in all_data_element_list]
+
         return all_data_customers
 
     @staticmethod

@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 6. Запуск тестов
 ```
-pytest -n auto --alluredir=allure-results
+pytest
 ```
 7. Запуск отчета allure по тестам
 ```
